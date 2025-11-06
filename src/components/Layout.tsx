@@ -48,6 +48,14 @@ const Layout = ({ children }: LayoutProps) => {
               Notes
             </Link>
             <Link
+              to="/gallery"
+              className={`ambient-glow text-sm transition-colors ${
+                isActive("/gallery") ? "text-foreground" : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              Gallery
+            </Link>
+            <Link
               to="/about"
               className={`ambient-glow text-sm transition-colors ${
                 isActive("/about") ? "text-foreground" : "text-muted-foreground hover:text-foreground"
