@@ -50,6 +50,45 @@ npm run dev
 - Click on "New codespace" to launch a new Codespace environment.
 - Edit files directly within the Codespace and commit and push your changes once you're done.
 
+## Supabase backend (fullstack тохиргоо)
+
+Энэ төсөл нь Supabase-тэй холбогдсон fullstack сайт болсон: Бичвэр, Тэмдэглэл,
+Зураг бүгд Supabase DB-ээс динамикаар татагдаж, `/admin` хэсэгт нэвтэрч CRUD хийнэ.
+
+### 1. Орчны хувьсагч
+
+`.env.example`-г хуулж `.env` болгон Supabase-ийн утгаа оруулна
+(Supabase Dashboard → Project Settings → API):
+
+```sh
+cp .env.example .env
+```
+
+```
+VITE_SUPABASE_URL=https://<project-ref>.supabase.co
+VITE_SUPABASE_ANON_KEY=<anon public key>
+```
+
+### 2. Өгөгдлийн сан үүсгэх
+
+Supabase Dashboard → **SQL Editor** дотор `supabase/migrations/0001_init.sql`-ийн
+агуулгыг бүхэлд нь хуулж ажиллуулна. Энэ нь хүснэгт, RLS бодлого, `gallery`
+storage bucket, болон seed контентыг үүсгэнэ.
+
+### 3. Админ хэрэглэгч үүсгэх
+
+Supabase Dashboard → **Authentication → Users → Add user** дээр имэйл/нууц үгээ
+оруулна (имэйл баталгаажуулалтыг асаалттай бол unconfirmed хэрэглэгчийг
+"Auto Confirm" болгоно). Дараа нь `/admin/login` дээр нэвтэрнэ.
+
+> RLS: нийтэд зөвхөн `published = true` мөрүүд харагдана; нэвтэрсэн хэрэглэгч бүх
+> үйлдэл хийх эрхтэй (нэг админтай сайтад тохирсон).
+
+### Маршрутууд
+
+- Нийтийн: `/`, `/essays`, `/essays/:id`, `/notes`, `/gallery`, `/about`
+- Админ: `/admin/login`, `/admin`, `/admin/essays`, `/admin/notes`, `/admin/gallery`
+
 ## What technologies are used for this project?
 
 This project is built with:
@@ -59,6 +98,7 @@ This project is built with:
 - React
 - shadcn-ui
 - Tailwind CSS
+- Supabase (Postgres, Auth, Storage)
 
 ## How can I deploy this project?
 

@@ -1,58 +1,75 @@
 import { Link } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 import Layout from "@/components/Layout";
+import { essaysApi, notesApi } from "@/lib/api";
+
+interface FeedItem {
+  key: string;
+  to: string;
+  typeLabel: string;
+  title: string;
+  date: string;
+  excerpt: string;
+}
 
 const Home = () => {
-  const latestPosts = [
-    {
-      id: 1,
-      type: "essay",
-      title: "On Silence and Stillness",
-      date: "2024-03-15",
-      excerpt: "There's a particular quality to silence that we've forgotten in the age of constant noise. It's not the absence of sound, but the presence of space..."
-    },
-    {
-      id: 2,
-      type: "note",
-      title: "Morning Thoughts",
-      date: "2024-03-10",
-      excerpt: "The light through the window reminds me that every day is a gift we unwrap slowly."
-    },
-    {
-      id: 3,
-      type: "essay",
-      title: "Technology as a Mirror",
-      date: "2024-03-05",
-      excerpt: "The tools we build reflect who we are. They're not neutral — they carry our values, our assumptions, our hopes and fears..."
-    }
-  ];
+  const { data: essays } = useQuery({
+    queryKey: ["essays", "published"],
+    queryFn: essaysApi.listPublished,
+  });
+  const { data: notes } = useQuery({
+    queryKey: ["notes", "published"],
+    queryFn: notesApi.listPublished,
+  });
+
+  const feed: FeedItem[] = [
+    ...(essays ?? []).map((e) => ({
+      key: `essay-${e.id}`,
+      to: `/essays/${e.id}`,
+      typeLabel: "Бичвэр",
+      title: e.title,
+      date: e.published_at,
+      excerpt: e.excerpt ?? "",
+    })),
+    ...(notes ?? []).map((n) => ({
+      key: `note-${n.id}`,
+      to: "/notes",
+      typeLabel: "Тэмдэглэл",
+      title: n.content.length > 60 ? `${n.content.slice(0, 60)}…` : n.content,
+      date: n.published_at,
+      excerpt: n.content,
+    })),
+  ]
+    .sort((a, b) => b.date.localeCompare(a.date))
+    .slice(0, 4);
 
   return (
     <Layout>
       <div className="fade-in">
         <div className="mb-16">
           <h1 className="text-4xl md:text-5xl font-light mb-6 text-balance">
-            Hi, feel the moments with me
+            Сайн уу, надтай хамт мөчүүдийг мэдэрцгээе
           </h1>
           <p className="text-lg text-muted-foreground leading-relaxed">
-            This is a quiet corner of the internet where I think out loud about technology, 
-            philosophy, and what it means to live deliberately in a world of constant distraction.
+            Энэ бол интернэтийн нэгэн нам гүм булан — технологи, гүн ухаан,
+            мөн тасралтгүй сатааралтай ертөнцөд ухамсартай амьдрах гэж юу болох тухай би энд дуу хоолойгоо чанга гарган боддог.
           </p>
         </div>
 
         <div className="space-y-12">
-          <h2 className="text-2xl font-light text-muted-foreground">Latest writings</h2>
-          
-          {latestPosts.map((post, index) => (
-            <article 
-              key={post.id} 
+          <h2 className="text-2xl font-light text-muted-foreground">Сүүлийн бичлэгүүд</h2>
+
+          {feed.map((post, index) => (
+            <article
+              key={post.key}
               className="fade-in group"
               style={{ animationDelay: `${index * 100}ms` }}
             >
-              <Link to={`/${post.type}s/${post.id}`} className="block">
+              <Link to={post.to} className="block">
                 <div className="mb-2 flex items-center gap-3 text-sm text-muted-foreground">
-                  <time>{post.date}</time>
+                  <time>{post.date.slice(0, 10)}</time>
                   <span>·</span>
-                  <span className="capitalize">{post.type}</span>
+                  <span>{post.typeLabel}</span>
                 </div>
                 <h3 className="text-xl font-normal mb-3 group-hover:text-accent transition-colors ambient-glow">
                   {post.title}
@@ -65,11 +82,11 @@ const Home = () => {
           ))}
 
           <div className="pt-8">
-            <Link 
-              to="/essays" 
+            <Link
+              to="/essays"
               className="ambient-glow text-sm text-muted-foreground hover:text-foreground transition-colors"
             >
-              View all writings →
+              Бүх бичлэгийг үзэх →
             </Link>
           </div>
         </div>

@@ -24,7 +24,7 @@ export const ThemeToggle = () => {
     <button
       onClick={toggleTheme}
       className="ambient-glow p-2 rounded-lg text-muted-foreground hover:text-foreground transition-colors"
-      aria-label="Toggle theme"
+      aria-label="Загвар солих"
     >
       {theme === "light" ? (
         <Moon className="h-4 w-4" />

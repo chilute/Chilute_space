@@ -1,36 +1,39 @@
 import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import Layout from "@/components/Layout";
-
-interface GalleryImage {
-  id: number;
-  src: string;
-  alt: string;
-  caption?: string;
-}
+import { galleryApi } from "@/lib/api";
+import type { GalleryImage } from "@/lib/database.types";
 
 const Gallery = () => {
   const [selectedImage, setSelectedImage] = useState<GalleryImage | null>(null);
 
-  // Placeholder images - replace with actual images
-  const images: GalleryImage[] = [
-    { id: 1, src: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4", alt: "Mountain landscape at dawn", caption: "Silence speaks" },
-    { id: 2, src: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05", alt: "Misty forest path", caption: "Where thoughts wander" },
-    { id: 3, src: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e", alt: "Forest canopy", caption: "Beneath the green" },
-    { id: 4, src: "https://images.unsplash.com/photo-1426604966848-d7adac402bff", alt: "Desert sunset", caption: "Golden hour" },
-    { id: 5, src: "https://images.unsplash.com/photo-1501594907352-04cda38ebc29", alt: "Ocean horizon", caption: "Endless blue" },
-    { id: 6, src: "https://images.unsplash.com/photo-1472214103451-9374bd1c798e", alt: "Minimal winter scene", caption: "Winter whispers" },
-  ];
+  const {
+    data: images,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["gallery"],
+    queryFn: galleryApi.list,
+  });
 
   return (
     <Layout>
       <div className="fade-in">
-        <h1 className="text-4xl mb-4 opacity-90">Gallery</h1>
+        <h1 className="text-4xl mb-4 opacity-90">Зураг</h1>
         <p className="text-muted-foreground mb-16 text-lg leading-relaxed">
-          A quiet museum of moments
+          Мөчүүдийн нам гүм музей
         </p>
 
+        {isLoading && <p className="text-muted-foreground">Уншиж байна…</p>}
+        {isError && (
+          <p className="text-destructive">Алдаа гарлаа. Дахин оролдоно уу.</p>
+        )}
+        {!isLoading && !isError && images?.length === 0 && (
+          <p className="text-muted-foreground">Одоогоор зураг алга байна.</p>
+        )}
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {images.map((image, index) => (
+          {images?.map((image, index) => (
             <div
               key={image.id}
               className="group cursor-pointer fade-in"
@@ -40,7 +43,7 @@ const Gallery = () => {
               <div className="relative overflow-hidden rounded-lg aspect-[4/3] bg-muted/30">
                 <img
                   src={image.src}
-                  alt={image.alt}
+                  alt={image.alt ?? ""}
                   className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100"
                   loading="lazy"
                 />
@@ -57,13 +60,13 @@ const Gallery = () => {
         {/* Lightbox for full image view */}
         {selectedImage && (
           <div
-            className="fixed inset-0 z-50 bg-background/95 backdrop-blur-sm flex items-center justify-center p-8 cursor-pointer fade-in"
+            className="fixed inset-0 z-50 bg-background/95 backdrop-blur-sm flex items-center justify-center p-4 sm:p-8 cursor-pointer fade-in"
             onClick={() => setSelectedImage(null)}
           >
             <div className="relative max-w-6xl max-h-[90vh] w-full">
               <img
                 src={selectedImage.src}
-                alt={selectedImage.alt}
+                alt={selectedImage.alt ?? ""}
                 className="w-full h-full object-contain rounded-lg"
               />
               {selectedImage.caption && (

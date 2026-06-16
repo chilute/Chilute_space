@@ -14,7 +14,7 @@ export default {
     },
     extend: {
       fontFamily: {
-        serif: ['Crimson Pro', 'serif'],
+        serif: ['Spectral', 'serif'],
         mono: ['JetBrains Mono', 'monospace'],
       },
       colors: {
