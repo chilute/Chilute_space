@@ -27,9 +27,22 @@ const Layout = ({ children }: LayoutProps) => {
         <nav className="container max-w-3xl mx-auto px-6 py-6 sm:py-8 flex items-center justify-between">
           <Link
             to="/"
-            className="text-xl sm:text-2xl font-light tracking-tight opacity-70 hover:opacity-100 transition-opacity duration-300"
+            aria-label="Chilute — нүүр"
+            className="flex items-center gap-2.5 opacity-70 hover:opacity-100 transition-opacity duration-300"
           >
-            Chilute.
+            <img
+              src="/logo.png"
+              alt=""
+              className="h-8 w-auto block dark:hidden"
+            />
+            <img
+              src="/logo-dark.png"
+              alt=""
+              className="h-8 w-auto hidden dark:block"
+            />
+            <span className="text-xl sm:text-2xl font-light tracking-tight">
+              Chilute.
+            </span>
           </Link>
 
           {/* Desktop navigation */}
