@@ -2,6 +2,7 @@ import { Link, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { ArrowLeft } from "lucide-react";
 import Layout from "@/components/Layout";
+import Markdown from "@/components/Markdown";
 import { essaysApi } from "@/lib/api";
 
 const EssayDetail = () => {
@@ -44,9 +45,7 @@ const EssayDetail = () => {
             <h1 className="text-4xl md:text-5xl font-light mb-8">
               {essay.title}
             </h1>
-            <div className="prose prose-neutral dark:prose-invert max-w-none leading-relaxed whitespace-pre-line text-foreground/90">
-              {essay.content || essay.excerpt}
-            </div>
+            <Markdown>{essay.content || essay.excerpt || ""}</Markdown>
           </article>
         )}
       </div>

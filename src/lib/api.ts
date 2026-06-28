@@ -1,12 +1,5 @@
 import { supabase } from "./supabase";
-import type {
-  Essay,
-  EssayInput,
-  GalleryImage,
-  GalleryImageInput,
-  Note,
-  NoteInput,
-} from "./database.types";
+import type { Essay, EssayInput, Note, NoteInput } from "./database.types";
 
 // ============================================================
 // Essays
@@ -121,51 +114,13 @@ export const notesApi = {
 };
 
 // ============================================================
-// Gallery
+// Media (зургийн storage)
 // ============================================================
 const GALLERY_BUCKET = "gallery";
 
 export const galleryApi = {
-  async list(): Promise<GalleryImage[]> {
-    const { data, error } = await supabase
-      .from("gallery_images")
-      .select("*")
-      .order("sort_order", { ascending: true })
-      .order("created_at", { ascending: false });
-    if (error) throw error;
-    return data ?? [];
-  },
-
-  async create(input: GalleryImageInput): Promise<GalleryImage> {
-    const { data, error } = await supabase
-      .from("gallery_images")
-      .insert(input)
-      .select()
-      .single();
-    if (error) throw error;
-    return data;
-  },
-
-  async update(id: string, input: GalleryImageInput): Promise<GalleryImage> {
-    const { data, error } = await supabase
-      .from("gallery_images")
-      .update(input)
-      .eq("id", id)
-      .select()
-      .single();
-    if (error) throw error;
-    return data;
-  },
-
-  async remove(id: string): Promise<void> {
-    const { error } = await supabase
-      .from("gallery_images")
-      .delete()
-      .eq("id", id);
-    if (error) throw error;
-  },
-
-  // Storage руу зураг хуулж, нийтийн URL буцаана
+  // Storage руу зураг хуулж, нийтийн URL буцаана.
+  // Нийтлэл, тэмдэглэлд шууд оруулах зурагт ашиглана.
   async uploadImage(file: File): Promise<string> {
     const ext = file.name.split(".").pop() ?? "jpg";
     const path = `${crypto.randomUUID()}.${ext}`;

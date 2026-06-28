@@ -9,14 +9,12 @@ import Home from "./pages/Home";
 import Essays from "./pages/Essays";
 import EssayDetail from "./pages/EssayDetail";
 import Notes from "./pages/Notes";
-import Gallery from "./pages/Gallery";
 import About from "./pages/About";
 import NotFound from "./pages/NotFound";
 import Login from "./pages/admin/Login";
 import Dashboard from "./pages/admin/Dashboard";
 import EssaysAdmin from "./pages/admin/EssaysAdmin";
 import NotesAdmin from "./pages/admin/NotesAdmin";
-import GalleryAdmin from "./pages/admin/GalleryAdmin";
 
 const queryClient = new QueryClient();
 
@@ -33,7 +31,6 @@ const App = () => (
             <Route path="/essays" element={<Essays />} />
             <Route path="/essays/:id" element={<EssayDetail />} />
             <Route path="/notes" element={<Notes />} />
-            <Route path="/gallery" element={<Gallery />} />
             <Route path="/about" element={<About />} />
 
             {/* Админ хэсэг */}
@@ -59,14 +56,6 @@ const App = () => (
               element={
                 <ProtectedRoute>
                   <NotesAdmin />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/admin/gallery"
-              element={
-                <ProtectedRoute>
-                  <GalleryAdmin />
                 </ProtectedRoute>
               }
             />

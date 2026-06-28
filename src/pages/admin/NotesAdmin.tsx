@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { lazy, Suspense, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { Pencil, Trash2, Plus } from "lucide-react";
@@ -8,8 +8,9 @@ import type { Note, NoteInput } from "@/lib/database.types";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
+
+const BlockEditor = lazy(() => import("@/components/BlockEditor"));
 import {
   AlertDialog,
   AlertDialogAction,
@@ -106,14 +107,20 @@ const NotesAdmin = () => {
           className="space-y-5"
         >
           <div className="space-y-2">
-            <Label htmlFor="content">Агуулга</Label>
-            <Textarea
-              id="content"
-              rows={6}
-              value={form.content ?? ""}
-              onChange={(e) => setForm({ ...form, content: e.target.value })}
-              required
-            />
+            <Label>Агуулга</Label>
+            <Suspense
+              fallback={
+                <div className="flex h-48 items-center justify-center rounded-md border border-input bg-background text-sm text-muted-foreground">
+                  Засварлагч ачааллаж байна…
+                </div>
+              }
+            >
+              <BlockEditor
+                key={edit.mode === "edit" ? edit.note.id : "new"}
+                initialMarkdown={form.content ?? ""}
+                onChange={(content) => setForm({ ...form, content })}
+              />
+            </Suspense>
           </div>
           <div className="space-y-2">
             <Label htmlFor="date">Огноо</Label>

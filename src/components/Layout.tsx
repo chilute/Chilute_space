@@ -11,7 +11,6 @@ const navItems = [
   { to: "/", label: "Нүүр" },
   { to: "/essays", label: "Бичвэр" },
   { to: "/notes", label: "Тэмдэглэл" },
-  { to: "/gallery", label: "Зураг" },
   { to: "/about", label: "Тухай" },
 ];
 
@@ -107,7 +106,7 @@ const Layout = ({ children }: LayoutProps) => {
 
       <footer className="border-t border-border/50 mt-20 sm:mt-24">
         <div className="container max-w-3xl mx-auto px-6 py-8 text-center text-sm text-muted-foreground">
-          <p>Технологи бодолтой уулзах нам гүм орон зай</p>
+          <p>chilute.mn@gmail.com</p>
         </div>
       </footer>
     </div>

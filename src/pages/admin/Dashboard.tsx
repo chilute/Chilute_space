@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { FileText, StickyNote, Image as ImageIcon } from "lucide-react";
+import { FileText, StickyNote } from "lucide-react";
 import AdminLayout from "./AdminLayout";
-import { essaysApi, notesApi, galleryApi } from "@/lib/api";
+import { essaysApi, notesApi } from "@/lib/api";
 import { Card } from "@/components/ui/card";
 
 const Dashboard = () => {
@@ -13,10 +13,6 @@ const Dashboard = () => {
   const { data: notes } = useQuery({
     queryKey: ["admin", "notes"],
     queryFn: notesApi.listAll,
-  });
-  const { data: images } = useQuery({
-    queryKey: ["gallery"],
-    queryFn: galleryApi.list,
   });
 
   const cards = [
@@ -32,18 +28,12 @@ const Dashboard = () => {
       count: notes?.length,
       icon: StickyNote,
     },
-    {
-      to: "/admin/gallery",
-      label: "Зураг",
-      count: images?.length,
-      icon: ImageIcon,
-    },
   ];
 
   return (
     <AdminLayout>
       <h1 className="text-3xl font-light mb-10">Хяналтын самбар</h1>
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         {cards.map((c) => (
           <Link key={c.to} to={c.to}>
             <Card className="p-6 hover:border-foreground/30 transition-colors h-full">

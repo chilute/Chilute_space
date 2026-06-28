@@ -48,16 +48,15 @@ const Home = () => {
       <div className="fade-in">
         <div className="mb-16">
           <h1 className="text-4xl md:text-5xl font-light mb-6 text-balance">
-            Сайн уу, надтай хамт мөчүүдийг мэдэрцгээе
+            Чөлөөт тэмдэглэл
           </h1>
           <p className="text-lg text-muted-foreground leading-relaxed">
-            Энэ бол интернэтийн нэгэн нам гүм булан — технологи, гүн ухаан,
-            мөн тасралтгүй сатааралтай ертөнцөд ухамсартай амьдрах гэж юу болох тухай би энд дуу хоолойгоо чанга гарган боддог.
+            Дасал болсон шуугианаас алсрахыг хүссэн орон зай.
           </p>
         </div>
 
         <div className="space-y-12">
-          <h2 className="text-2xl font-light text-muted-foreground">Сүүлийн бичлэгүүд</h2>
+          <h2 className="text-2xl font-light text-muted-foreground">Сүүлийн бичвэрүүд</h2>
 
           {feed.map((post, index) => (
             <article
@@ -86,7 +85,7 @@ const Home = () => {
               to="/essays"
               className="ambient-glow text-sm text-muted-foreground hover:text-foreground transition-colors"
             >
-              Бүх бичлэгийг үзэх →
+              Бүх бичвэрийг үзэх →
             </Link>
           </div>
         </div>

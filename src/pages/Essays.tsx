@@ -19,7 +19,7 @@ const Essays = () => {
         <div className="mb-16">
           <h1 className="text-4xl md:text-5xl font-light mb-6">Бичвэр</h1>
           <p className="text-lg text-muted-foreground leading-relaxed">
-            Технологи, гүн ухаан, ухамсартай амьдралын тухай уртын эргэцүүлэл.
+            Магад ирээдүйн надад хэрэг болж мэдэх агуулгууд.
           </p>
         </div>
 

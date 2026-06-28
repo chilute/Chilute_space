@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import Layout from "@/components/Layout";
+import Markdown from "@/components/Markdown";
 import { notesApi } from "@/lib/api";
 
 const Notes = () => {
@@ -40,9 +41,7 @@ const Notes = () => {
               <time className="text-sm text-muted-foreground block mb-3">
                 {note.published_at.slice(0, 10)}
               </time>
-              <p className="leading-relaxed text-foreground/90">
-                {note.content}
-              </p>
+              <Markdown className="prose-sm">{note.content}</Markdown>
             </article>
           ))}
         </div>

@@ -8,7 +8,6 @@ const navItems = [
   { to: "/admin", label: "Хяналтын самбар", end: true },
   { to: "/admin/essays", label: "Бичвэр" },
   { to: "/admin/notes", label: "Тэмдэглэл" },
-  { to: "/admin/gallery", label: "Зураг" },
 ];
 
 const AdminLayout = ({ children }: { children: ReactNode }) => {
