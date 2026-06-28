@@ -20,9 +20,11 @@ export default defineConfig(() => ({
         short_name: "Chilute",
         description: "Тууллын тэмдэглэл",
         lang: "mn",
-        // Апп бүх хүнд нийтийн нүүр хуудас дээр нээгдэнэ. Эзэн footer-ийн
-        // далд "Админ" линкээр /admin руу ороод нэвтэрнэ.
-        start_url: "/",
+        // start_url-г зориуд хоослоно (plugin-ийн default "/"-г дарна).
+        // Ингэснээр iOS "Нүүр дэлгэц рүү нэмэх" үед та ямар хуудсан дээр
+        // байснаар тэр хаягийг нээдэг болно: /admin/login дээр нэмбэл апп
+        // админ дээр, нүүр дээр нэмбэл нүүр дээр нээгдэнэ.
+        start_url: undefined,
         scope: "/",
         display: "standalone",
         background_color: "#f5eede",
