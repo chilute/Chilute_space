@@ -20,7 +20,9 @@ export default defineConfig(() => ({
         short_name: "Chilute",
         description: "Тууллын тэмдэглэл",
         lang: "mn",
-        start_url: "/",
+        // Суусан апп шууд админ руу нээгдэнэ (standalone-д хаягийн мөр байхгүй,
+        // нэвтрээгүй бол /admin/login руу автоматаар чиглүүлнэ).
+        start_url: "/admin",
         scope: "/",
         display: "standalone",
         background_color: "#f5eede",
