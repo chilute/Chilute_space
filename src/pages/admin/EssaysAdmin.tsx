@@ -134,18 +134,18 @@ const EssaysAdmin = () => {
               onChange={(e) => setForm({ ...form, title: e.target.value })}
               placeholder="Гарчиг"
               required
-              className="w-full bg-transparent px-[54px] font-serif text-4xl md:text-5xl font-light tracking-tight placeholder:text-muted-foreground/40 focus:outline-none"
+              className="w-full bg-transparent px-6 md:px-[54px] font-serif text-4xl md:text-5xl font-light tracking-tight placeholder:text-muted-foreground/40 focus:outline-none"
             />
             <Textarea
               value={form.excerpt ?? ""}
               onChange={(e) => setForm({ ...form, excerpt: e.target.value })}
               placeholder="Дэд гарчиг нэмэх…"
               rows={1}
-              className="w-full resize-none border-0 bg-transparent px-[54px] font-serif text-xl text-muted-foreground shadow-none placeholder:text-muted-foreground/40 focus-visible:ring-0 focus-visible:ring-offset-0"
+              className="w-full resize-none border-0 bg-transparent px-6 md:px-[54px] font-serif text-xl text-muted-foreground shadow-none placeholder:text-muted-foreground/40 focus-visible:ring-0 focus-visible:ring-offset-0"
             />
             <Suspense
               fallback={
-                <div className="flex h-64 items-center px-[54px] text-sm text-muted-foreground">
+                <div className="flex h-64 items-center px-6 md:px-[54px] text-sm text-muted-foreground">
                   Засварлагч ачааллаж байна…
                 </div>
               }
@@ -159,7 +159,7 @@ const EssaysAdmin = () => {
           </div>
 
           {/* Нэмэлт тохиргоо */}
-          <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4 border-t border-border/50 px-[54px] pt-6">
+          <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4 border-t border-border/50 px-6 md:px-[54px] pt-6">
             <div className="flex items-center gap-3">
               <Label htmlFor="date" className="text-muted-foreground">
                 Огноо

@@ -69,7 +69,7 @@ const BlockEditor = ({ initialMarkdown, onChange }: BlockEditorProps) => {
   return (
     // Хайрцаггүй, ил тод — гарчиг/дэд гарчигтай нэг гадаргуу болж нийлнэ.
     // BlockNote-ийн өөрийн 54px зүүн зай нь чирэх бариул/'+' товчид зориулагдсан.
-    <div className="[&_.bn-editor]:min-h-[24rem] [&_.bn-editor]:!px-[54px]">
+    <div className="[&_.bn-editor]:min-h-[24rem] [&_.bn-editor]:!px-6 md:[&_.bn-editor]:!px-[54px]">
       <BlockNoteView editor={editor} theme={theme} onChange={handleChange} />
     </div>
   );
