@@ -1,16 +1,24 @@
 import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import Layout from "@/components/Layout";
+import Markdown from "@/components/Markdown";
 import { essaysApi, notesApi } from "@/lib/api";
 
-interface FeedItem {
-  key: string;
-  to: string;
-  typeLabel: string;
-  title: string;
-  date: string;
-  excerpt: string;
-}
+type FeedItem =
+  | {
+      kind: "essay";
+      key: string;
+      to: string;
+      title: string;
+      date: string;
+      excerpt: string;
+    }
+  | {
+      kind: "note";
+      key: string;
+      date: string;
+      content: string;
+    };
 
 const Home = () => {
   const { data: essays } = useQuery({
@@ -23,22 +31,24 @@ const Home = () => {
   });
 
   const feed: FeedItem[] = [
-    ...(essays ?? []).map((e) => ({
-      key: `essay-${e.id}`,
-      to: `/essays/${e.id}`,
-      typeLabel: "Бичвэр",
-      title: e.title,
-      date: e.published_at,
-      excerpt: e.excerpt ?? "",
-    })),
-    ...(notes ?? []).map((n) => ({
-      key: `note-${n.id}`,
-      to: "/notes",
-      typeLabel: "Тэмдэглэл",
-      title: n.content.length > 60 ? `${n.content.slice(0, 60)}…` : n.content,
-      date: n.published_at,
-      excerpt: n.content,
-    })),
+    ...(essays ?? []).map(
+      (e): FeedItem => ({
+        kind: "essay",
+        key: `essay-${e.id}`,
+        to: `/essays/${e.id}`,
+        title: e.title,
+        date: e.published_at,
+        excerpt: e.excerpt ?? "",
+      }),
+    ),
+    ...(notes ?? []).map(
+      (n): FeedItem => ({
+        kind: "note",
+        key: `note-${n.id}`,
+        date: n.published_at,
+        content: n.content,
+      }),
+    ),
   ]
     .sort((a, b) => b.date.localeCompare(a.date))
     .slice(0, 4);
@@ -58,27 +68,42 @@ const Home = () => {
         <div className="space-y-12">
           <h2 className="text-2xl font-light text-muted-foreground">Сүүлийн бичвэрүүд</h2>
 
-          {feed.map((post, index) => (
-            <article
-              key={post.key}
-              className="fade-in group"
-              style={{ animationDelay: `${index * 100}ms` }}
-            >
-              <Link to={post.to} className="block">
-                <div className="mb-2 flex items-center gap-3 text-sm text-muted-foreground">
+          {feed.map((post, index) =>
+            post.kind === "essay" ? (
+              <article
+                key={post.key}
+                className="fade-in group"
+                style={{ animationDelay: `${index * 100}ms` }}
+              >
+                <Link to={post.to} className="block">
+                  <div className="mb-2 flex items-center gap-3 text-sm text-muted-foreground">
+                    <time>{post.date.slice(0, 10)}</time>
+                    <span>·</span>
+                    <span>Бичвэр</span>
+                  </div>
+                  <h3 className="text-xl font-normal mb-3 group-hover:text-accent transition-colors ambient-glow">
+                    {post.title}
+                  </h3>
+                  <p className="text-muted-foreground leading-relaxed">
+                    {post.excerpt}
+                  </p>
+                </Link>
+              </article>
+            ) : (
+              <article
+                key={post.key}
+                className="fade-in border-l-2 border-border pl-6 py-2"
+                style={{ animationDelay: `${index * 100}ms` }}
+              >
+                <div className="mb-3 flex items-center gap-3 text-sm text-muted-foreground">
                   <time>{post.date.slice(0, 10)}</time>
                   <span>·</span>
-                  <span>{post.typeLabel}</span>
+                  <span>Тэмдэглэл</span>
                 </div>
-                <h3 className="text-xl font-normal mb-3 group-hover:text-accent transition-colors ambient-glow">
-                  {post.title}
-                </h3>
-                <p className="text-muted-foreground leading-relaxed">
-                  {post.excerpt}
-                </p>
-              </Link>
-            </article>
-          ))}
+                <Markdown className="prose-sm">{post.content}</Markdown>
+              </article>
+            ),
+          )}
 
           <div className="pt-8">
             <Link
