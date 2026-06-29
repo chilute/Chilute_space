@@ -1,7 +1,7 @@
 import { lazy, Suspense, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { Pencil, Trash2, Plus } from "lucide-react";
+import { Pencil, Trash2, Plus, Eye } from "lucide-react";
 import AdminLayout from "./AdminLayout";
 import { essaysApi } from "@/lib/api";
 import type { Essay, EssayInput } from "@/lib/database.types";
@@ -206,8 +206,15 @@ const EssaysAdmin = () => {
                     </span>
                   )}
                 </div>
-                <span className="text-sm text-muted-foreground">
-                  {essay.published_at.slice(0, 10)}
+                <span className="flex items-center gap-3 text-sm text-muted-foreground">
+                  <span>{essay.published_at.slice(0, 10)}</span>
+                  <span
+                    className="inline-flex items-center gap-1"
+                    title="Үзэлт"
+                  >
+                    <Eye className="h-3.5 w-3.5" />
+                    {essay.views ?? 0}
+                  </span>
                 </span>
               </div>
               <div className="flex items-center gap-1 shrink-0">

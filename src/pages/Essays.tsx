@@ -1,6 +1,6 @@
-import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import Layout from "@/components/Layout";
+import EssayCard from "@/components/EssayCard";
 import { essaysApi } from "@/lib/api";
 
 const Essays = () => {
@@ -33,25 +33,9 @@ const Essays = () => {
           <p className="text-muted-foreground">Одоогоор бичвэр алга байна.</p>
         )}
 
-        <div className="space-y-12">
+        <div className="space-y-8">
           {essays?.map((essay, index) => (
-            <article
-              key={essay.id}
-              className="fade-in group"
-              style={{ animationDelay: `${index * 100}ms` }}
-            >
-              <Link to={`/essays/${essay.id}`} className="block">
-                <time className="text-sm text-muted-foreground mb-2 block">
-                  {essay.published_at.slice(0, 10)}
-                </time>
-                <h2 className="text-2xl font-normal mb-3 group-hover:text-accent transition-colors ambient-glow">
-                  {essay.title}
-                </h2>
-                <p className="text-muted-foreground leading-relaxed">
-                  {essay.excerpt}
-                </p>
-              </Link>
-            </article>
+            <EssayCard key={essay.id} essay={essay} index={index} />
           ))}
         </div>
       </div>

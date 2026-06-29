@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import Layout from "@/components/Layout";
-import Markdown from "@/components/Markdown";
+import NoteCard from "@/components/NoteCard";
 import { notesApi } from "@/lib/api";
 
 const Notes = () => {
@@ -31,18 +31,14 @@ const Notes = () => {
           <p className="text-muted-foreground">Одоогоор тэмдэглэл алга байна.</p>
         )}
 
-        <div className="space-y-10">
+        <div className="space-y-8">
           {notes?.map((note, index) => (
-            <article
+            <NoteCard
               key={note.id}
-              className="fade-in border-l-2 border-border pl-6 py-2"
-              style={{ animationDelay: `${index * 80}ms` }}
-            >
-              <time className="text-sm text-muted-foreground block mb-3">
-                {note.published_at.slice(0, 10)}
-              </time>
-              <Markdown className="prose-sm">{note.content}</Markdown>
-            </article>
+              content={note.content}
+              date={note.published_at}
+              index={index}
+            />
           ))}
         </div>
       </div>

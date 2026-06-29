@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { FileText, StickyNote } from "lucide-react";
 import AdminLayout from "./AdminLayout";
+import Feed from "@/components/Feed";
 import { essaysApi, notesApi } from "@/lib/api";
 import { Card } from "@/components/ui/card";
 
@@ -45,6 +46,11 @@ const Dashboard = () => {
             </Card>
           </Link>
         ))}
+      </div>
+
+      <div className="mt-16 space-y-8">
+        <h2 className="text-xl font-light text-muted-foreground">Сүүлийн үед</h2>
+        <Feed essays={essays} notes={notes} limit={6} />
       </div>
     </AdminLayout>
   );

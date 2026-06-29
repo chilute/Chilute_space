@@ -8,6 +8,7 @@ export interface Essay {
   content: string | null;
   published: boolean;
   published_at: string;
+  views: number;
   created_at: string;
   updated_at: string;
 }

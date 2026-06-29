@@ -61,6 +61,14 @@ export const essaysApi = {
     const { error } = await supabase.from("essays").delete().eq("id", id);
     if (error) throw error;
   },
+
+  // Үзэлтийг 1-ээр нэмэгдүүлнэ (нийтийн зочид дуудаж болно).
+  async incrementViews(id: string): Promise<void> {
+    const { error } = await supabase.rpc("increment_essay_views", {
+      essay_id: id,
+    });
+    if (error) throw error;
+  },
 };
 
 // ============================================================
